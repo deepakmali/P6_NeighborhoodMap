@@ -3,34 +3,49 @@ var malls = [
 {
     title : 'GVK One',
     lat : 17.4232521,
-    lng : 78.447205
+    lng : 78.447205,
+    description : ''
 },
 {
     title : 'Inorbit Mall',
     lat : 17.4356584,
-    lng : 78.3854069
+    lng : 78.3854069,
+    description : ''
 },
 {
     title : 'Central Shopping Mall',
     lat : 17.4247671,
-    lng : 78.4073366
+    lng : 78.4073366,
+    description : ''
 },
 {
     title : 'Forum Srujana Mall',
     lat : 17.4247671,
-    lng : 78.4073366
+    lng : 78.4073366,
+    description : ''
 },
 {
     title : 'Manjeera Mall',
     lat : 17.4247671,
-    lng : 78.4073366
+    lng : 78.4073366,
+    description : ''
 },
 {
     title : 'Atrium Mall',
     lat : 17.4247671,
-    lng : 78.4073366
+    lng : 78.4073366,
+    description : ''
 },
 ]
+
+// object to hold the mall details
+var mall_details = function(mall){
+    this.title = ko.observable(mall.title);
+    this.lat = ko.observable(mall.lat);
+    this.lng = ko.observable(mall.lng);
+    // Todo: add ajax call to wikipedia and get the description for the mall
+};
+
 // Initialize the map
 var map;
 function initMap(){
@@ -40,6 +55,10 @@ function initMap(){
     });
 }
 
+
+// Show error when the google map fails to load for some reason
 function showError(){
     document.getElementsByTagName("body").innerHtml = '<h1>Sorry, Google maps is not reachable currently.<br/>Please try Again later</h1>';
 }
+
+// Todo: add viewmodel
