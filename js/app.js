@@ -79,7 +79,10 @@ var viewModel = function (){
         self.mallsList.push(new mall_details(mall));
     });
     console.log(self.mallsList());
+    // initialize a marker
     var mallMarker;
+    // initialize a popup for malls
+    var popup = new google.maps.InfoWindow();
     self.mallsList().forEach(function (mall){
         mallMarker = new google.maps.Marker({
             position : new google.maps.LatLng(mall.lat(), mall.lng()),
@@ -88,6 +91,15 @@ var viewModel = function (){
             title : mall.title()
         });
         mall.marker = mallMarker;
-        console.log(mall.marker);
+        // form the content of the InfoWindow
+        var info = "<div> "+ mall.description() + "</div>";
+        // add click listener to show the popup on marker
+        google.maps.event.addListener(mallMarker, 'click', function(){
+            popup.setContent(info);
+            popup.open(map, this);
+            mall.marker.setAnimation(google.maps.Animation.BOUNCE);
+        });
+        // console.log(mall.marker);
     });
+
 };
