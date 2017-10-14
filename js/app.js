@@ -91,8 +91,23 @@ var viewModel = function (){
             title : mall.title()
         });
         mall.marker = mallMarker;
+        // Add a image to popup
+        // flickrUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=97d1c372b413a02c10ef47541ba743a8&text=&woe_id=24527543&lat="+mall.lat()+"&lon="+mall.lng()+"&per_page=1&page=1&format=json&nojsoncallback=1&api_sig=55add2d5a0b4f4fd2d92d17f6f9af98e";
+        googleapiKey = "AIzaSyDx-pYXGTkwhFeqcG9M8SQHeKP0LTdZbYQ";
+        gimageUrl = "https://maps.googleapis.com/maps/api/streetview?size=600x300&location="+ mall.lat() + ',' + mall.lng() +"&heading=151.78&pitch=-0.76&key=" + googleapiKey ;
+        
+        // ajax call to get the image
+        // $.ajax({
+        //     url : flickrUrl,
+        //     dataType : "json",
+        //     success : function (data){
+        //         console.log(data);
+        //     }
+        // });
         // form the content of the InfoWindow
-        var info = '<a href="'+ mall.description() + '" target="_blank">Read on Wikipedia</a>';
+        var info = '<img src="' + gimageUrl + '"/>'
+        info += '<a href="'+ mall.description() + '" target="_blank">Read on Wikipedia</a>';
+        console.log(info);
         // add click listener to show the popup on marker
         google.maps.event.addListener(mallMarker, 'click', function(){
             popup.setContent(info);

@@ -9,6 +9,10 @@ ul{
     margin: 0;
 }
 
+img{
+    height: 90px;
+    width: 110px;
+}
 #map {
     height: 100%;
 }
