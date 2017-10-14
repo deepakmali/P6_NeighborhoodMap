@@ -78,7 +78,7 @@ var viewModel = function (){
     malls.forEach(function (mall){
         self.mallsList.push(new mall_details(mall));
     });
-    console.log(self.mallsList());
+    // console.log(self.mallsList());
     // initialize a marker
     var mallMarker;
     // initialize a popup for malls
@@ -104,5 +104,28 @@ var viewModel = function (){
     // add click event for the list elements
     self.showPopup = function (mall){
         google.maps.event.trigger(mall.marker, 'click');
+    };
+
+    // user input variable
+    self.filterString = ko.observable('');
+    // filter the tourist attractions based on user's filter input
+    self.filteredList = ko.observableArray();
+    // initialize with all the tourist places
+    // self.filteredList = self.mallsList.slice(0);
+    self.mallsList().forEach(function (mall){
+        self.filteredList.push(mall);
+    });
+    // console.log(self.filteredList());
+    self.filteredList.removeAll();
+    // console.log(self.filteredList());
+    // filter the tourist places as user types
+    self.filterList = function (){
+        // reset the filteredList
+        // http://knockoutjs.com/documentation/observableArrays.html
+        self.filteredList.removeAll();
+        // remove all markers from map
+        self.mallsList().forEach(function (mall){
+            mall.marker.setVisible(false);
+        });
     };
 };
