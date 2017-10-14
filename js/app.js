@@ -120,12 +120,20 @@ var viewModel = function (){
     // console.log(self.filteredList());
     // filter the tourist places as user types
     self.filterList = function (){
+        var substr = self.filterString().toLowerCase();
         // reset the filteredList
         // http://knockoutjs.com/documentation/observableArrays.html
         self.filteredList.removeAll();
         // remove all markers from map
         self.mallsList().forEach(function (mall){
             mall.marker.setVisible(false);
+            // https://stackoverflow.com/questions/1789945/how-to-check-whether-a-string-contains-a-substring-in-javascript
+            if (mall.title().toLowerCase().indexOf(substr) !== -1) {
+                self.filteredList.push(mall);
+            }
+        });
+        self.filteredList().forEach(function(mall){
+            mall.marker.setVisible(true);
         });
     };
 };
