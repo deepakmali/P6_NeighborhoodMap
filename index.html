@@ -15,7 +15,8 @@
         <!-- displaying list in loop -->
         <!-- http://learn.knockoutjs.com/#/?tutorial=collections -->
         <ul data-bind="foreach: mallsList">
-            <li data-bind="text: title"></li>
+            <!-- http://knockoutjs.com/documentation/binding-context.html -->
+            <li data-bind="text: title, click: $parent.showPopup"></li>
         </ul>
     </div>
     <!-- Todo: add search box to filter the malls by user -->

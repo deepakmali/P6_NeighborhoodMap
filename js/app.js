@@ -101,5 +101,8 @@ var viewModel = function (){
         });
         // console.log(mall.marker);
     });
-
+    // add click event for the list elements
+    self.showPopup = function (mall){
+        google.maps.event.trigger(mall.marker, 'click');
+    };
 };
