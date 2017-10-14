@@ -4,6 +4,26 @@ html, body {
     padding: 0;
 }
 
+ul{
+    padding: 2px;
+    margin: 0;
+}
+
 #map {
     height: 100%;
+}
+
+
+#heading{
+    position: fixed;
+    left: 0px;
+    top: 10%;
+}
+
+#mallsList{
+    position: fixed;
+    left: 0px;
+    top: 20%;
+    background-color: #bade91;
+    padding-left: 0px;
 }
