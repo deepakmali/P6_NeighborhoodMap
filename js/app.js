@@ -62,3 +62,4 @@ function showError(){
 }
 
 // Todo: add viewmodel
+// knockout ViewModel
