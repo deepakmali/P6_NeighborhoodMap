@@ -4,45 +4,82 @@ var malls = [
     title : 'GVK One',
     lat : 17.4232521,
     lng : 78.447205,
-    description : ''
+    description : 'dummy'
+},
+{
+    title : 'Golconda Fort',
+    lat : 17.383309,
+    lng : 78.3988641,
+    description : 'dummy'
+},
+{
+    title : 'Salar Jung Museum',
+    lat : 17.3713411,
+    lng : 78.4792221,
+    description : 'dummy'
+},
+{
+    title : 'Buddha Statue',
+    lat : 17.4155731,
+    lng : 78.4662276,
+    description : 'dummy'
+},
+{
+    title : 'Charminar',
+    lat : 17.3615636,
+    lng : 78.4724758,
+    description : 'dummy'
+},
+{
+    title : 'Birla Mandir',
+    lat : 17.4062367,
+    lng : 78.4668714,
+    description : 'dummy'
+},
+{
+    title : 'Birla Planetarium',
+    lat : 17.4033187,
+    lng : 78.4684219,
+    description : 'dummy'
 },
 {
     title : 'Inorbit Mall',
     lat : 17.4356584,
     lng : 78.3854069,
-    description : ''
+    description : 'dummy'
 },
 {
     title : 'Central Shopping Mall',
     lat : 17.4247671,
     lng : 78.4073366,
-    description : ''
+    description : 'dummy'
 },
 {
     title : 'Forum Srujana Mall',
     lat : 17.4247671,
     lng : 78.4073366,
-    description : ''
+    description : 'dummy'
 },
 {
     title : 'Manjeera Mall',
     lat : 17.4247671,
     lng : 78.4073366,
-    description : ''
+    description : 'dummy'
 },
 {
     title : 'Atrium Mall',
     lat : 17.4247671,
     lng : 78.4073366,
-    description : ''
+    description : 'dummy'
 },
-]
+];
 
 // object to hold the mall details
-var mall_details = function(mall){
+var mall_details = function (mall){
     this.title = ko.observable(mall.title);
     this.lat = ko.observable(mall.lat);
     this.lng = ko.observable(mall.lng);
+    this.description = ko.observable(mall.description);
     // Todo: add ajax call to wikipedia and get the description for the mall
 };
 
@@ -53,6 +90,7 @@ function initMap(){
         center : {lat : 17.4338554, lng : 78.363027},
         zoom : 11
     });
+    ko.applyBindings(new viewModel());
 }
 
 
@@ -62,4 +100,24 @@ function showError(){
 }
 
 // Todo: add viewmodel
-// knockout ViewModel
+// knockout viewModel
+var viewModel = function (){
+    self = this;
+    this.mallsList = ko.observableArray();
+    // push malls into the mallsList
+    malls.forEach(function (mall){
+        self.mallsList.push(new mall_details(mall));
+    });
+    console.log(self.mallsList());
+    var mallMarker;
+    self.mallsList().forEach(function (mall){
+        mallMarker = new google.maps.Marker({
+            position : new google.maps.LatLng(mall.lat(), mall.lng()),
+            map : map,
+            animation : google.maps.Animation.DROP,
+            title : mall.title()
+        });
+        mall.marker = mallMarker;
+        console.log(mall.marker);
+    });
+};
