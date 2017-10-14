@@ -12,16 +12,10 @@
     <!-- Todo: add a box to show the list of malls -->
     <h2 id="heading">Tourist attractions in Hyderabad, India.</h2>
     <div id="mallsList">
-        <ul>
-            <li>Test List Item</li>
-            <li>Test List Item</li>
-            <li>Test List Item</li>
-            <li>Test List Item</li>
-            <li>Test List Item</li>
-            <li>Test List Item</li>
-            <li>Test List Item</li>
-            <li>Test List Item</li>
-            <li>Test List Item</li>
+        <!-- displaying list in loop -->
+        <!-- http://learn.knockoutjs.com/#/?tutorial=collections -->
+        <ul data-bind="foreach: mallsList">
+            <li data-bind="text: title"></li>
         </ul>
     </div>
     <!-- Todo: add search box to filter the malls by user -->
