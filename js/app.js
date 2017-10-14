@@ -105,7 +105,7 @@ var viewModel = function (){
         //     }
         // });
         // form the content of the InfoWindow
-        var info = '<img src="' + gimageUrl + '"/>'
+        var info = '<img src="' + gimageUrl + '"/>';
         info += '<a href="'+ mall.description() + '" target="_blank">Read on Wikipedia</a>';
         console.log(info);
         // add click listener to show the popup on marker
