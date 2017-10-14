@@ -4,43 +4,43 @@ var malls = [
     title : 'Golconda Fort',
     lat : 17.383309,
     lng : 78.3988641,
-    description : 'dummy'
+    description : 'https://en.wikipedia.org/wiki/Golkonda'
 },
 {
     title : 'Salar Jung Museum',
     lat : 17.3713411,
     lng : 78.4792221,
-    description : 'dummy'
+    description : 'https://en.wikipedia.org/wiki/Salar_Jung_Museum'
 },
 {
     title : 'Buddha Statue',
     lat : 17.4155731,
     lng : 78.4662276,
-    description : 'dummy'
+    description : 'https://en.wikipedia.org/wiki/Buddha_Statue_of_Hyderabad'
 },
 {
     title : 'Charminar',
     lat : 17.3615636,
     lng : 78.4724758,
-    description : 'dummy'
+    description : 'https://en.wikipedia.org/wiki/Charminar'
 },
 {
     title : 'Birla Mandir',
     lat : 17.4062367,
     lng : 78.4668714,
-    description : 'dummy'
+    description : 'https://en.wikipedia.org/wiki/Birla_Mandir,_Hyderabad'
 },
 {
     title : 'Birla Planetarium',
     lat : 17.4033187,
     lng : 78.4684219,
-    description : 'dummy'
+    description : 'https://en.wikipedia.org/wiki/Birla_Science_Museum'
 },
 {
     title : 'Chowmahalla Palace',
     lat : 17.3578233,
     lng : 78.469501,
-    description : 'dummy'
+    description : 'https://en.wikipedia.org/wiki/Chowmahalla_Palace'
 }
 ];
 
@@ -92,7 +92,7 @@ var viewModel = function (){
         });
         mall.marker = mallMarker;
         // form the content of the InfoWindow
-        var info = "<div> "+ mall.description() + "</div>";
+        var info = '<a href="'+ mall.description() + '" target="_blank">Read on Wikipedia</a>';
         // add click listener to show the popup on marker
         google.maps.event.addListener(mallMarker, 'click', function(){
             popup.setContent(info);
