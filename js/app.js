@@ -1,12 +1,6 @@
 // array of all the malls in hyderabad
 var malls = [
 {
-    title : 'GVK One',
-    lat : 17.4232521,
-    lng : 78.447205,
-    description : 'dummy'
-},
-{
     title : 'Golconda Fort',
     lat : 17.383309,
     lng : 78.3988641,
@@ -43,35 +37,11 @@ var malls = [
     description : 'dummy'
 },
 {
-    title : 'Inorbit Mall',
-    lat : 17.4356584,
-    lng : 78.3854069,
+    title : 'Chowmahalla Palace',
+    lat : 17.3578233,
+    lng : 78.469501,
     description : 'dummy'
-},
-{
-    title : 'Central Shopping Mall',
-    lat : 17.4247671,
-    lng : 78.4073366,
-    description : 'dummy'
-},
-{
-    title : 'Forum Srujana Mall',
-    lat : 17.4247671,
-    lng : 78.4073366,
-    description : 'dummy'
-},
-{
-    title : 'Manjeera Mall',
-    lat : 17.4247671,
-    lng : 78.4073366,
-    description : 'dummy'
-},
-{
-    title : 'Atrium Mall',
-    lat : 17.4247671,
-    lng : 78.4073366,
-    description : 'dummy'
-},
+}
 ];
 
 // object to hold the mall details
