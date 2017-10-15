@@ -118,13 +118,16 @@ var viewModel = function (){
                 }
             },
             error : function(){
-                self.result = '<p>Sorry, could not load links</p>';
+                alert('Oops, Looks like wikipedia is not accessible');
             }
         });
 
         // console.log('testing');
         // console.log(info);
         google.maps.event.addListener(mallMarker, 'click', function(){
+            if (mall.wikiLink() === undefined ){
+                mall.wikiLink('http://en.wikipedia.org');
+            }
             if(info.indexOf(mall.wikiLink()) === -1){
                 info += '<a href="' + mall.wikiLink() + '">Read more about ' + mall.title() + ' </a>';    
             }
