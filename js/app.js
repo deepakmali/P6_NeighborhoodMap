@@ -105,9 +105,6 @@ var viewModel = function (){
 
         var info = '<img class="images" src="' + gimageUrl + '"/>';
         wiki_url = "http://en.wikipedia.org/w/api.php?action=opensearch&search=" + mall.title() + "&format=json&callback=wikiCallback";
-        // var wikiRequestTimeout = setTimeout(function(){
-        // result = "Failed to get the wiki articles!!!";
-        // }, 8000);
         $.ajax({
             url : wiki_url,
             dataType : 'jsonp',
@@ -119,16 +116,14 @@ var viewModel = function (){
                     article_url = "http://en.wikipedia.org/wiki/" + article_str ;
                     mall.wikiLink(article_url);
                 }
-                clearTimeout(wikiRequestTimeout);
-                self.result( self.result() + '</ul>');
             },
             error : function(){
                 self.result = '<p>Sorry, could not load links</p>';
             }
         });
 
-        console.log('testing');
-        console.log(info);
+        // console.log('testing');
+        // console.log(info);
         google.maps.event.addListener(mallMarker, 'click', function(){
             if(info.indexOf(mall.wikiLink()) === -1){
                 info += '<a href="' + mall.wikiLink() + '">Read more about ' + mall.title() + ' </a>';    
