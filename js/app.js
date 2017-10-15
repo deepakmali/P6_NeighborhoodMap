@@ -69,7 +69,7 @@ function initMap(){
 
 // Show error when the google map fails to load for some reason
 function showError(){
-    document.getElementsByTagName("body").innerHTML = '<h1>Sorry, Google maps is not reachable currently.<br/>Please try Again later</h1>';
+    document.getElementById("main").innerHTML = '<h1>Sorry, Google maps is not reachable currently.<br/>Please try Again later</h1>';
 }
 
 // Todo: add viewmodel
