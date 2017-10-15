@@ -134,7 +134,7 @@ var viewModel = function (){
         self.filteredList.push(mall);
     });
     // console.log(self.filteredList());
-    self.filteredList.removeAll();
+    // self.filteredList.removeAll();
     // console.log(self.filteredList());
     // filter the tourist places as user types
     self.filterList = function (){

@@ -14,11 +14,12 @@
     <div id="mallsList">
         <!-- displaying list in loop -->
         <!-- http://learn.knockoutjs.com/#/?tutorial=collections -->
-        <ul data-bind="foreach: mallsList">
+        <input type="text" name="filter" data-bind="textInput: filterString, event: {keyup: filterList}">
+        <ul data-bind="foreach: filteredList">
             <!-- http://knockoutjs.com/documentation/binding-context.html -->
             <li data-bind="text: title, click: $parent.showPopup"></li>
         </ul>
-        <input type="text" name="filter" data-bind="textInput: filterString, event: {keyup: filterList}">
+        
     </div>
     <!-- Todo: add search box to filter the malls by user -->
 
