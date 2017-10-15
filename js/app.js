@@ -44,13 +44,16 @@ var malls = [
 }
 ];
 
+
+
+
+
 // object to hold the mall details
 var mall_details = function (mall){
     this.title = ko.observable(mall.title);
     this.lat = ko.observable(mall.lat);
     this.lng = ko.observable(mall.lng);
     this.description = ko.observable(mall.description);
-    // Todo: add ajax call to wikipedia and get the description for the mall
 };
 
 // Initialize the map
@@ -66,7 +69,7 @@ function initMap(){
 
 // Show error when the google map fails to load for some reason
 function showError(){
-    document.getElementsByTagName("body").innerHtml = '<h1>Sorry, Google maps is not reachable currently.<br/>Please try Again later</h1>';
+    document.getElementsByTagName("body").innerHTML = '<h1>Sorry, Google maps is not reachable currently.<br/>Please try Again later</h1>';
 }
 
 // Todo: add viewmodel
@@ -74,10 +77,42 @@ function showError(){
 var viewModel = function (){
     self = this;
     this.mallsList = ko.observableArray();
+
+    //api call to wiki to get related links to Hyderabad
+
+    var moreAboutHyderabad = '<ul>';
+    wiki_url = "http://en.wikipedia.org/w/api.php?action=opensearch&search=Hyderabad,India&format=json&callback=wikiCallback";
+        var wikiRequestTimeout = setTimeout(function(){
+        moreAboutHyderabad = "Failed to get the wiki articles!!!";
+        }, 8000);
+        $.ajax({
+            url : wiki_url,
+            dataType : 'jsonp',
+            success : function(data){
+                response = data[1] ;
+                for (var i = 0; i < Math.min(3,response.length); i++) {
+                    // console.log(response[i]);
+                    article_str = response[i];
+                    article_url = "http://en.wikipedia.org/wiki/" + article_str ;
+                    moreAboutHyderabad += '<li><a href="' + article_url + '">' + article_str + '</a></li>';
+                }
+                clearTimeout(wikiRequestTimeout);
+                console.log(moreAboutHyderabad);
+                moreAboutHyderabad += '</ul>';
+                document.getElementById('WikiLinks').innerHTML = moreAboutHyderabad;
+            },
+            error : function(){
+                document.getElementById('WikiLinks').innerHTML = '<p>Sorry, could not load links</p>';
+            }
+        });
+
     // push malls into the mallsList
+    // setTimeout(function(){console.log('testing');}, 8000);
     malls.forEach(function (mall){
         self.mallsList.push(new mall_details(mall));
     });
+
+
     // console.log(self.mallsList());
     // initialize a marker
     var mallMarker;
@@ -107,6 +142,7 @@ var viewModel = function (){
         // form the content of the InfoWindow
         var info = '<img src="' + gimageUrl + '"/>';
         info += '<a href="'+ mall.description() + '" target="_blank">Read on Wikipedia</a>';
+        // info += mall.links();
         console.log(info);
         // add click listener to show the popup on marker
         google.maps.event.addListener(mallMarker, 'click', function(){
