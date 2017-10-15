@@ -79,37 +79,6 @@ var viewModel = function (){
     self = this;
     this.mallsList = ko.observableArray();
     self.result = ko.observable();
-
-    //api call to wiki to get related links to Hyderabad
-
-    // var moreAboutHyderabad = '<ul>';
-    // wiki_url = "http://en.wikipedia.org/w/api.php?action=opensearch&search=Hyderabad,India&format=json&callback=wikiCallback";
-    //     var wikiRequestTimeout = setTimeout(function(){
-    //     moreAboutHyderabad = "Failed to get the wiki articles!!!";
-    //     }, 8000);
-    //     $.ajax({
-    //         url : wiki_url,
-    //         dataType : 'jsonp',
-    //         success : function(data){
-    //             response = data[1] ;
-    //             for (var i = 0; i < Math.min(3,response.length); i++) {
-    //                 // console.log(response[i]);
-    //                 article_str = response[i];
-    //                 article_url = "http://en.wikipedia.org/wiki/" + article_str ;
-    //                 moreAboutHyderabad += '<li><a href="' + article_url + '">' + article_str + '</a></li>';
-    //             }
-    //             clearTimeout(wikiRequestTimeout);
-    //             // console.log(moreAboutHyderabad);
-    //             moreAboutHyderabad += '</ul>';
-    //             // document.getElementById('WikiLinks').innerHTML = moreAboutHyderabad;
-    //         },
-    //         error : function(){
-    //             // document.getElementById('WikiLinks').innerHTML = '<p>Sorry, could not load links</p>';
-    //         }
-    //     });
-
-    // push malls into the mallsList
-    // setTimeout(function(){console.log('testing');}, 8000);
     malls.forEach(function (mall){
         self.mallsList.push(new mall_details(mall));
     });
@@ -133,21 +102,8 @@ var viewModel = function (){
         googleapiKey = "AIzaSyDx-pYXGTkwhFeqcG9M8SQHeKP0LTdZbYQ";
         gimageUrl = "https://maps.googleapis.com/maps/api/streetview?size=600x300&location="+ mall.lat() + ',' + mall.lng() +"&heading=151.78&pitch=-0.76&key=" + googleapiKey ;
         
-        // ajax call to get the image
-        // $.ajax({
-        //     url : flickrUrl,
-        //     dataType : "json",
-        //     success : function (data){
-        //         console.log(data);
-        //     }
-        // });
-        // form the content of the InfoWindow
+
         var info = '<img class="images" src="' + gimageUrl + '"/>';
-        // info += '<a href="'+ mall.description() + '" target="_blank">Read on Wikipedia</a>';
-        // info += mall.links();
-        // console.log(info);
-        // add wiki link to each place
-        // var result = ko.observable('<ul>');
         wiki_url = "http://en.wikipedia.org/w/api.php?action=opensearch&search=" + mall.title() + "&format=json&callback=wikiCallback";
         // var wikiRequestTimeout = setTimeout(function(){
         // result = "Failed to get the wiki articles!!!";
@@ -159,28 +115,20 @@ var viewModel = function (){
                 self.result('<ul>');
                 response = data[1] ;
                 for (var i = 0; i < Math.min(1,response.length); i++) {
-                    // console.log(response[i]);
                     article_str = response[i];
                     article_url = "http://en.wikipedia.org/wiki/" + article_str ;
                     mall.wikiLink(article_url)
-                    // self.result( self.result() + '<li><a href="' + article_url + '">' + article_str + '</a></li>');
                 }
                 clearTimeout(wikiRequestTimeout);
-                // console.log(moreAboutHyderabad);
                 self.result( self.result() + '</ul>');
-                // document.getElementById('WikiLinks').innerHTML = moreAboutHyderabad;
-                // console.log(self.result);
             },
             error : function(){
                 self.result = '<p>Sorry, could not load links</p>';
             }
         });
 
-        // console.log(result);
-        // info += mall.wikiLink();
         console.log('testing');
         console.log(info);
-        // add click listener to show the popup on marker
         google.maps.event.addListener(mallMarker, 'click', function(){
             if(info.indexOf(mall.wikiLink()) === -1){
                 info += '<a href="' + mall.wikiLink() + '">Read more about ' + mall.title() + ' </a>';    
@@ -194,9 +142,7 @@ var viewModel = function (){
                 mall.marker.setAnimation(null);
             }, 500);
         });
-        // console.log(mall.marker);
     });
-    // add click event for the list elements
     self.showPopup = function (mall){
         google.maps.event.trigger(mall.marker, 'click');
     };
@@ -210,9 +156,6 @@ var viewModel = function (){
     self.mallsList().forEach(function (mall){
         self.filteredList.push(mall);
     });
-    // console.log(self.filteredList());
-    // self.filteredList.removeAll();
-    // console.log(self.filteredList());
     // filter the tourist places as user types
     self.filterList = function (){
         var substr = self.filterString().toLowerCase();
