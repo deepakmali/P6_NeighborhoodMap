@@ -4,14 +4,16 @@ html, body {
     padding: 0;
 }
 
+
 ul{
     padding: 2px;
     margin: 0;
 }
 
-img{
+.images{
     height: 90px;
     width: 110px;
+    border-radius: 50%;
 }
 #map {
     height: 100%;

@@ -1,7 +1,7 @@
 // array of all the malls in hyderabad
 var malls = [
 {
-    title : 'Golconda Fort',
+    title : 'Golkonda Fort',
     lat : 17.383309,
     lng : 78.3988641,
     description : 'https://en.wikipedia.org/wiki/Golkonda'
@@ -54,6 +54,7 @@ var mall_details = function (mall){
     this.lat = ko.observable(mall.lat);
     this.lng = ko.observable(mall.lng);
     this.description = ko.observable(mall.description);
+    this.wikiLink = ko.observable();
 };
 
 // Initialize the map
@@ -77,34 +78,35 @@ function showError(){
 var viewModel = function (){
     self = this;
     this.mallsList = ko.observableArray();
+    self.result = ko.observable();
 
     //api call to wiki to get related links to Hyderabad
 
-    var moreAboutHyderabad = '<ul>';
-    wiki_url = "http://en.wikipedia.org/w/api.php?action=opensearch&search=Hyderabad,India&format=json&callback=wikiCallback";
-        var wikiRequestTimeout = setTimeout(function(){
-        moreAboutHyderabad = "Failed to get the wiki articles!!!";
-        }, 8000);
-        $.ajax({
-            url : wiki_url,
-            dataType : 'jsonp',
-            success : function(data){
-                response = data[1] ;
-                for (var i = 0; i < Math.min(3,response.length); i++) {
-                    // console.log(response[i]);
-                    article_str = response[i];
-                    article_url = "http://en.wikipedia.org/wiki/" + article_str ;
-                    moreAboutHyderabad += '<li><a href="' + article_url + '">' + article_str + '</a></li>';
-                }
-                clearTimeout(wikiRequestTimeout);
-                console.log(moreAboutHyderabad);
-                moreAboutHyderabad += '</ul>';
-                document.getElementById('WikiLinks').innerHTML = moreAboutHyderabad;
-            },
-            error : function(){
-                document.getElementById('WikiLinks').innerHTML = '<p>Sorry, could not load links</p>';
-            }
-        });
+    // var moreAboutHyderabad = '<ul>';
+    // wiki_url = "http://en.wikipedia.org/w/api.php?action=opensearch&search=Hyderabad,India&format=json&callback=wikiCallback";
+    //     var wikiRequestTimeout = setTimeout(function(){
+    //     moreAboutHyderabad = "Failed to get the wiki articles!!!";
+    //     }, 8000);
+    //     $.ajax({
+    //         url : wiki_url,
+    //         dataType : 'jsonp',
+    //         success : function(data){
+    //             response = data[1] ;
+    //             for (var i = 0; i < Math.min(3,response.length); i++) {
+    //                 // console.log(response[i]);
+    //                 article_str = response[i];
+    //                 article_url = "http://en.wikipedia.org/wiki/" + article_str ;
+    //                 moreAboutHyderabad += '<li><a href="' + article_url + '">' + article_str + '</a></li>';
+    //             }
+    //             clearTimeout(wikiRequestTimeout);
+    //             // console.log(moreAboutHyderabad);
+    //             moreAboutHyderabad += '</ul>';
+    //             // document.getElementById('WikiLinks').innerHTML = moreAboutHyderabad;
+    //         },
+    //         error : function(){
+    //             // document.getElementById('WikiLinks').innerHTML = '<p>Sorry, could not load links</p>';
+    //         }
+    //     });
 
     // push malls into the mallsList
     // setTimeout(function(){console.log('testing');}, 8000);
@@ -140,13 +142,52 @@ var viewModel = function (){
         //     }
         // });
         // form the content of the InfoWindow
-        var info = '<img src="' + gimageUrl + '"/>';
-        info += '<a href="'+ mall.description() + '" target="_blank">Read on Wikipedia</a>';
+        var info = '<img class="images" src="' + gimageUrl + '"/>';
+        // info += '<a href="'+ mall.description() + '" target="_blank">Read on Wikipedia</a>';
         // info += mall.links();
+        // console.log(info);
+        // add wiki link to each place
+        // var result = ko.observable('<ul>');
+        wiki_url = "http://en.wikipedia.org/w/api.php?action=opensearch&search=" + mall.title() + "&format=json&callback=wikiCallback";
+        // var wikiRequestTimeout = setTimeout(function(){
+        // result = "Failed to get the wiki articles!!!";
+        // }, 8000);
+        $.ajax({
+            url : wiki_url,
+            dataType : 'jsonp',
+            success : function(data){
+                self.result('<ul>');
+                response = data[1] ;
+                for (var i = 0; i < Math.min(1,response.length); i++) {
+                    // console.log(response[i]);
+                    article_str = response[i];
+                    article_url = "http://en.wikipedia.org/wiki/" + article_str ;
+                    mall.wikiLink(article_url)
+                    // self.result( self.result() + '<li><a href="' + article_url + '">' + article_str + '</a></li>');
+                }
+                clearTimeout(wikiRequestTimeout);
+                // console.log(moreAboutHyderabad);
+                self.result( self.result() + '</ul>');
+                // document.getElementById('WikiLinks').innerHTML = moreAboutHyderabad;
+                // console.log(self.result);
+            },
+            error : function(){
+                self.result = '<p>Sorry, could not load links</p>';
+            }
+        });
+
+        // console.log(result);
+        // info += mall.wikiLink();
+        console.log('testing');
         console.log(info);
         // add click listener to show the popup on marker
         google.maps.event.addListener(mallMarker, 'click', function(){
+            if(info.indexOf(mall.wikiLink()) === -1){
+                info += '<a href="' + mall.wikiLink() + '">Read more about ' + mall.title() + ' </a>';    
+            }
+            
             popup.setContent(info);
+            console.log(info);
             popup.open(map, this);
             mall.marker.setAnimation(google.maps.Animation.BOUNCE);
             setTimeout(function () {
