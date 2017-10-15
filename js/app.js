@@ -117,7 +117,7 @@ var viewModel = function (){
                 for (var i = 0; i < Math.min(1,response.length); i++) {
                     article_str = response[i];
                     article_url = "http://en.wikipedia.org/wiki/" + article_str ;
-                    mall.wikiLink(article_url)
+                    mall.wikiLink(article_url);
                 }
                 clearTimeout(wikiRequestTimeout);
                 self.result( self.result() + '</ul>');
