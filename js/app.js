@@ -113,6 +113,9 @@ var viewModel = function (){
             popup.setContent(info);
             popup.open(map, this);
             mall.marker.setAnimation(google.maps.Animation.BOUNCE);
+            setTimeout(function () {
+                mall.marker.setAnimation(null);
+            }, 500);
         });
         // console.log(mall.marker);
     });
